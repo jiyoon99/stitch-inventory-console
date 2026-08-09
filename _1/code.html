@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HALFBOOK 운영 | 주문 관리</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #bccac0;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #6d7a72;
+        }
+        /* Dark Mode Specific Transitions */
+        html, body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+    </style>
+<!-- Injected Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-background": "#191c1e",
+                      "secondary-container": "#dae2fd",
+                      "tertiary-fixed": "#ffdad7",
+                      "background": "#f7f9fb",
+                      "surface-container-low": "#f2f4f6",
+                      "on-secondary": "#ffffff",
+                      "on-secondary-container": "#5c647a",
+                      "tertiary": "#9b3e3b",
+                      "tertiary-fixed-dim": "#ffb3ae",
+                      "surface-container-high": "#e6e8ea",
+                      "on-tertiary-fixed-variant": "#7f2928",
+                      "surface": "#f7f9fb",
+                      "primary": "#006948",
+                      "secondary": "#565e74",
+                      "on-secondary-fixed-variant": "#3f465c",
+                      "on-primary-fixed": "#002114",
+                      "surface-tint": "#006c4a",
+                      "on-tertiary-container": "#fffbff",
+                      "surface-container": "#eceef0",
+                      "on-secondary-fixed": "#131b2e",
+                      "primary-fixed": "#85f8c4",
+                      "inverse-surface": "#2d3133",
+                      "on-primary-container": "#f5fff7",
+                      "on-primary-fixed-variant": "#005137",
+                      "surface-container-highest": "#e0e3e5",
+                      "outline-variant": "#bccac0",
+                      "surface-dim": "#d8dadc",
+                      "on-primary": "#ffffff",
+                      "primary-container": "#00855d",
+                      "on-tertiary-fixed": "#410004",
+                      "error": "#ba1a1a",
+                      "error-container": "#ffdad6",
+                      "outline": "#6d7a72",
+                      "secondary-fixed": "#dae2fd",
+                      "surface-variant": "#e0e3e5",
+                      "surface-container-lowest": "#ffffff",
+                      "inverse-on-surface": "#eff1f3",
+                      "primary-fixed-dim": "#68dba9",
+                      "on-error-container": "#93000a",
+                      "on-surface-variant": "#3d4a42",
+                      "on-tertiary": "#ffffff",
+                      "inverse-primary": "#68dba9",
+                      "tertiary-container": "#ba5551",
+                      "surface-bright": "#f7f9fb",
+                      "on-surface": "#191c1e",
+                      "secondary-fixed-dim": "#bec6e0",
+                      "on-error": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "table-cell-padding": "12px 16px",
+                      "stack-md": "16px",
+                      "base": "4px",
+                      "stack-sm": "8px",
+                      "gutter": "16px",
+                      "container-padding": "24px"
+              },
+              "fontFamily": {
+                      "body-md": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "data-mono": ["JetBrains Mono"],
+                      "display": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "label-md": ["Inter"]
+              },
+              "fontSize": {
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "data-mono": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "display": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background dark:bg-inverse-surface text-on-surface dark:text-inverse-on-surface font-body-md text-body-md overflow-x-hidden antialiased">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 flex items-center justify-between px-gutter w-full h-16 bg-surface-container-lowest dark:bg-surface-dim border-b border-outline-variant dark:border-on-surface-variant flat no shadows">
+<div class="flex items-center gap-8">
+<h1 class="font-display text-display text-primary dark:text-primary-fixed-dim tracking-tight text-[24px]">HALFBOOK 운영</h1>
+<div class="relative w-80 hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant dark:text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-1.5 bg-surface-container-low dark:bg-surface-variant border border-outline-variant dark:border-outline rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-body-sm outline-none transition-all dark:text-on-surface" placeholder="주문, 고객명 검색..." type="text"/>
+</div>
+<div class="hidden lg:flex items-center gap-2 px-3 py-1 bg-surface-container-low dark:bg-surface-variant rounded-full border border-outline-variant dark:border-outline">
+<div class="w-2 h-2 bg-primary dark:bg-primary-fixed rounded-full animate-pulse"></div>
+<span class="text-label-md font-label-md text-on-surface-variant dark:text-on-surface-variant">서버 상태:</span>
+<span class="text-label-md font-label-md text-primary dark:text-primary-fixed-dim">운영 중</span>
+</div>
+</div>
+<nav class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors rounded-full relative">
+<span class="material-symbols-outlined">dns</span>
+</button>
+<button class="p-2 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors rounded-full relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-surface-container-lowest dark:border-surface-dim"></span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant dark:bg-outline mx-2"></div>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-2 px-3 py-1.5 hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors rounded-lg text-on-surface-variant dark:text-on-surface-variant" id="theme-toggle">
+<span class="material-symbols-outlined text-[20px] dark:hidden">dark_mode</span>
+<span class="material-symbols-outlined text-[20px] hidden dark:block text-primary-fixed-dim">light_mode</span>
+<span class="text-label-md font-label-md dark:text-on-surface">다크 모드</span>
+</button>
+<button class="flex items-center gap-3 px-3 py-1.5 hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors rounded-lg">
+<span class="text-label-md font-label-md text-on-surface dark:text-on-surface">계정</span>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate manager in a high-tech office environment, soft cinematic lighting, emerald green accent lighting in background, minimalist and high-quality aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBy8WDjXetDJYZLWT0zjWHceDHvuVM5YUnCAL2VZcNvk1mJIGzoYMTC1bWBawYZaeUSDMYvz4-UPsYCjY8NXg4cNBvhOCCDnxr0mtxTGSeZIPwgobCYYSLgDN0EpXZ8nlS65ha-DGrd_gsiDSUfQx-9Xw_7uDqXAzIc2f-k2nON8tZ47KlGGU0IwQjwJqRwpQtQ391TlwP-wyQjSWc3ImSvGhGiNxlaIU7tlgTobxaV2S5bpAbOkjcHqQ"/>
+</div>
+</button>
+</div>
+</nav>
+</header>
+<div class="flex">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-60 bg-surface-container-low dark:bg-surface-dim border-r border-outline-variant dark:border-on-surface-variant hidden lg:flex flex-col p-4 gap-stack-md">
+<div class="mb-4">
+<div class="flex items-center gap-3 mb-1">
+<div class="w-8 h-8 bg-primary rounded flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined">auto_stories</span>
+</div>
+<span class="font-display text-headline-md text-primary dark:text-primary-fixed-dim">HALFBOOK</span>
+</div>
+<p class="text-label-md font-label-md text-on-surface-variant dark:text-on-surface-variant px-1">엔터프라이즈 운영</p>
+</div>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary font-bold rounded-lg transition-all scale-98" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">주문 관리</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span class="font-label-md text-label-md">월간 현황</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">person_search</span>
+<span class="font-label-md text-label-md">고객 조회</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">시스템 설정</span>
+</a>
+</div>
+<div class="mt-4 px-2">
+<button class="w-full bg-primary dark:bg-primary-container text-on-primary dark:text-on-primary-container py-2.5 rounded-lg font-label-md text-label-md hover:opacity-90 transition-colors shadow-sm">
+                    주문 수기 등록
+                </button>
+</div>
+<div class="mt-auto flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="font-label-md text-label-md">도움말</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span class="font-label-md text-label-md">고객 지원</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="lg:ml-60 w-full min-h-screen p-container-padding transition-all">
+<!-- View Switcher -->
+<div class="flex items-center justify-between mb-8 border-b border-outline-variant dark:border-on-surface-variant">
+<div class="flex gap-8 overflow-x-auto custom-scrollbar">
+<button class="px-1 pb-4 text-primary dark:text-primary-fixed-dim font-bold border-b-2 border-primary dark:border-primary-fixed-dim whitespace-nowrap">주문 관리 보드</button>
+<button class="px-1 pb-4 text-on-surface-variant dark:text-on-surface-variant font-label-md hover:text-on-surface dark:hover:text-on-surface transition-colors whitespace-nowrap">월간 현황</button>
+<button class="px-1 pb-4 text-on-surface-variant dark:text-on-surface-variant font-label-md hover:text-on-surface dark:hover:text-on-surface transition-colors whitespace-nowrap">고객</button>
+<button class="px-1 pb-4 text-on-surface-variant dark:text-on-surface-variant font-label-md hover:text-on-surface dark:hover:text-on-surface transition-colors whitespace-nowrap">취소됨</button>
+<button class="px-1 pb-4 text-on-surface-variant dark:text-on-surface-variant font-label-md hover:text-on-surface dark:hover:text-on-surface transition-colors whitespace-nowrap">감사</button>
+</div>
+<div class="pb-4 hidden md:flex items-center gap-2">
+<span class="text-body-sm text-on-surface-variant dark:text-on-surface-variant">마지막 업데이트: 방금 전</span>
+<button class="material-symbols-outlined text-primary dark:text-primary-fixed-dim text-[20px] hover:rotate-180 transition-transform duration-500 cursor-pointer">refresh</button>
+</div>
+</div>
+<!-- Stats Section -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+<!-- All -->
+<div class="bg-surface-container-lowest dark:bg-surface-container p-4 rounded border-l-4 border-primary shadow-sm hover:translate-y-[-2px] transition-transform">
+<p class="text-label-md font-label-md text-on-surface-variant dark:text-on-surface-variant mb-1 uppercase tracking-wider">전체 주문</p>
+<h3 class="font-display text-headline-lg text-on-surface dark:text-on-surface">1,240</h3>
+</div>
+<!-- Waiting -->
+<div class="bg-surface-container-lowest dark:bg-surface-container p-4 rounded border-l-4 border-secondary-fixed-dim shadow-sm hover:translate-y-[-2px] transition-transform">
+<p class="text-label-md font-label-md text-on-surface-variant dark:text-on-surface-variant mb-1 uppercase tracking-wider">대기 중</p>
+<h3 class="font-display text-headline-lg text-on-surface dark:text-on-surface">42</h3>
+</div>
+<!-- Preparing -->
+<div class="bg-surface-container-lowest dark:bg-surface-container p-4 rounded border-l-4 border-primary-container shadow-sm hover:translate-y-[-2px] transition-transform">
+<p class="text-label-md font-label-md text-on-surface-variant dark:text-on-surface-variant mb-1 uppercase tracking-wider">준비 중</p>
+<h3 class="font-display text-headline-lg text-on-surface dark:text-on-surface">85</h3>
+</div>
+<!-- Produced -->
+<div class="bg-surface-container-lowest dark:bg-surface-container p-4 rounded border-l-4 border-tertiary-container shadow-sm hover:translate-y-[-2px] transition-transform">
+<p class="text-label-md font-label-md text-on-surface-variant dark:text-on-surface-variant mb-1 uppercase tracking-wider">제작 완료</p>
+<h3 class="font-display text-headline-lg text-on-surface dark:text-on-surface">156</h3>
+</div>
+<!-- Shipped -->
+<div class="bg-surface-container-lowest dark:bg-surface-container p-4 rounded border-l-4 border-primary shadow-sm hover:translate-y-[-2px] transition-transform">
+<p class="text-label-md font-label-md text-on-surface-variant dark:text-on-surface-variant mb-1 uppercase tracking-wider">출고 완료</p>
+<h3 class="font-display text-headline-lg text-on-surface dark:text-on-surface">957</h3>
+</div>
+</div>
+<!-- Filter & Table Controls -->
+<div class="flex flex-wrap items-center justify-between gap-4 mb-4">
+<div class="flex items-center gap-3">
+<div class="flex border border-outline-variant dark:border-on-surface-variant rounded-lg overflow-hidden bg-surface-container-lowest dark:bg-surface-container">
+<button class="px-4 py-1.5 bg-primary dark:bg-primary-container text-on-primary dark:text-on-primary-container font-label-md">전체</button>
+<button class="px-4 py-1.5 hover:bg-surface-container-low dark:hover:bg-surface-variant border-l border-outline-variant dark:border-on-surface-variant transition-colors font-label-md dark:text-on-surface">오늘</button>
+<button class="px-4 py-1.5 hover:bg-surface-container-low dark:hover:bg-surface-variant border-l border-outline-variant dark:border-on-surface-variant transition-colors font-label-md dark:text-on-surface">주간</button>
+</div>
+<button class="flex items-center gap-2 px-3 py-1.5 bg-surface-container-lowest dark:bg-surface-container border border-outline-variant dark:border-on-surface-variant rounded-lg hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors dark:text-on-surface">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+<span class="font-label-md text-label-md">필터</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-4 py-1.5 border border-outline-variant dark:border-on-surface-variant rounded-lg font-label-md hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors dark:text-on-surface">CSV 내보내기</button>
+<button class="px-4 py-1.5 bg-primary dark:bg-primary-container text-on-primary dark:text-on-primary-container rounded-lg font-label-md shadow-sm hover:opacity-90 transition-opacity">일괄 작업</button>
+</div>
+</div>
+<!-- Data Table Container -->
+<div class="bg-surface-container-lowest dark:bg-surface-container border border-outline-variant dark:border-on-surface-variant rounded-xl overflow-hidden shadow-sm">
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low dark:bg-surface-dim border-b border-outline-variant dark:border-on-surface-variant sticky top-0">
+<th class="p-table-cell-padding text-label-md font-label-md text-on-surface-variant dark:text-on-surface-variant uppercase tracking-wider">채널</th>
+<th class="p-table-cell-padding text-label-md font-label-md text-on-surface-variant dark:text-on-surface-variant uppercase tracking-wider">주문번호</th>
+<th class="p-table-cell-padding text-label-md font-label-md text-on-surface-variant dark:text-on-surface-variant uppercase tracking-wider">상품명</th>
+<th class="p-table-cell-padding text-label-md font-label-md text-on-surface-variant dark:text-on-surface-variant uppercase tracking-wider">수령인</th>
+<th class="p-table-cell-padding text-label-md font-label-md text-on-surface-variant dark:text-on-surface-variant uppercase tracking-wider">작업 상태</th>
+<th class="p-table-cell-padding text-label-md font-label-md text-on-surface-variant dark:text-on-surface-variant uppercase tracking-wider text-right">관리</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30 dark:divide-on-surface-variant/30">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/50 dark:hover:bg-surface-variant/30 transition-colors group">
+<td class="p-table-cell-padding">
+<span class="px-2 py-0.5 bg-primary/10 dark:bg-primary-fixed-dim/20 text-primary dark:text-primary-fixed-dim text-[10px] font-bold rounded uppercase">Direct</span>
+</td>
+<td class="p-table-cell-padding font-data-mono text-on-surface dark:text-on-surface">#HB-9421-A</td>
+<td class="p-table-cell-padding">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded border border-outline-variant dark:border-on-surface-variant bg-surface-container dark:bg-surface-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A macro shot of a premium leather-bound limited edition book titled The Odyssey, deep emerald green cover with gold leaf lettering, sitting on a minimalist slate desk, professional product photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuHp4L2FGohO9iN4qh0PriW2vxASFgLMNBMrFDsjEHQgpNViKknfuJlcBpSHsEDDBusr4b7coM0ElN7urWsfN_LuHmam8NebS9L2eqE3VbrN9m_mea644BCRhWKlKvAq8q9z1zRy92OmKqNbwo1Qced0o3CjbBB0CB_ExQSzt6HjEEHiRmJ7HWT1LeGYchcYAZ0glT0qxI3EHJIcHlBEc9asfRqn-ypWPy8jXv5hFrzfJAnXVmCYltoQ"/>
+</div>
+<div>
+<p class="font-label-md text-label-md dark:text-on-surface">The Odyssey: Collector's Ed.</p>
+<p class="text-[10px] text-on-surface-variant dark:text-on-surface-variant">ISBN: 978-0123456789</p>
+</div>
+</div>
+</td>
+<td class="p-table-cell-padding">
+<p class="font-label-md text-label-md dark:text-on-surface">Eleanor Shelstrop</p>
+<p class="text-[10px] text-on-surface-variant dark:text-on-surface-variant">San Francisco, CA</p>
+</td>
+<td class="p-table-cell-padding">
+<div class="flex items-center gap-1">
+<div class="flex-1 h-1.5 bg-primary dark:bg-primary-fixed rounded-full"></div>
+<div class="flex-1 h-1.5 bg-primary dark:bg-primary-fixed rounded-full"></div>
+<div class="flex-1 h-1.5 bg-surface-container-high dark:bg-surface-variant rounded-full relative">
+<span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold text-primary dark:text-primary-fixed-dim bg-primary/10 dark:bg-primary-fixed-dim/20 px-1 rounded">검수 중</span>
+</div>
+<div class="flex-1 h-1.5 bg-surface-container-high dark:bg-surface-variant rounded-full"></div>
+</div>
+</td>
+<td class="p-table-cell-padding text-right">
+<button class="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-surface-container-high dark:hover:bg-surface-variant rounded">
+<span class="material-symbols-outlined text-on-surface-variant dark:text-on-surface-variant">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="bg-surface-container-low/20 dark:bg-surface-variant/10 hover:bg-surface-container-low/50 dark:hover:bg-surface-variant/30 transition-colors group">
+<td class="p-table-cell-padding">
+<span class="px-2 py-0.5 bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary text-[10px] font-bold rounded uppercase">Amazon</span>
+</td>
+<td class="p-table-cell-padding font-data-mono text-on-surface dark:text-on-surface">#HB-9422-C</td>
+<td class="p-table-cell-padding">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded border border-outline-variant dark:border-on-surface-variant bg-surface-container dark:bg-surface-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A minimalist tech-themed coffee table book cover with abstract neural network graphics in emerald and silver, soft shadow, clean white background, professional studio lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyEQ2LFQwwFzLPeVlmL85XjYOJ-mHAdLZjBPnBnIIp0_ZAu39WZ29DwkuDpv-3be-A8ivbMYXaP4tTgPVVCS0D8WURLWPmIriQSu6LydB-B3Yit92s_EYkoV4vzTV5DmguRptRe_-Ayvm42xE1yzA6Bu55gXGbAw4Zf7XiauVQNMxbxV11-xxJB4qMYhDnEoVVGdEBQWqL2bclM1eulufX1yQ47lUQcvOEmXN1bDZMMN9ftjMImfGOjQ"/>
+</div>
+<div>
+<p class="font-label-md text-label-md dark:text-on-surface">Neural Networks Decoded</p>
+<p class="text-[10px] text-on-surface-variant dark:text-on-surface-variant">ISBN: 978-0987654321</p>
+</div>
+</div>
+</td>
+<td class="p-table-cell-padding">
+<p class="font-label-md text-label-md dark:text-on-surface">Chidi Anagonye</p>
+<p class="text-[10px] text-on-surface-variant dark:text-on-surface-variant">Cambridge, MA</p>
+</td>
+<td class="p-table-cell-padding">
+<div class="flex items-center gap-1">
+<div class="flex-1 h-1.5 bg-primary dark:bg-primary-fixed rounded-full"></div>
+<div class="flex-1 h-1.5 bg-primary-container/30 dark:bg-primary/20 rounded-full animate-pulse"></div>
+<div class="flex-1 h-1.5 bg-surface-container-high dark:bg-surface-variant rounded-full"></div>
+<div class="flex-1 h-1.5 bg-surface-container-high dark:bg-surface-variant rounded-full"></div>
+</div>
+</td>
+<td class="p-table-cell-padding text-right">
+<button class="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-surface-container-high dark:hover:bg-surface-variant rounded">
+<span class="material-symbols-outlined text-on-surface-variant dark:text-on-surface-variant">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="px-gutter py-3 bg-surface-container-low dark:bg-surface-dim border-t border-outline-variant dark:border-on-surface-variant flex items-center justify-between">
+<p class="text-body-sm text-on-surface-variant dark:text-on-surface-variant">전체 1,240건 중 1-4건 표시</p>
+<div class="flex items-center gap-2">
+<button class="p-1 hover:bg-surface-container-high dark:hover:bg-surface-variant rounded transition-colors text-on-surface-variant dark:text-on-surface-variant disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 flex items-center justify-center bg-primary dark:bg-primary-fixed-dim text-on-primary dark:text-on-primary-fixed text-label-md rounded">1</button>
+<button class="w-8 h-8 flex items-center justify-center hover:bg-surface-container-high dark:hover:bg-surface-variant text-label-md rounded transition-colors dark:text-on-surface">2</button>
+<button class="w-8 h-8 flex items-center justify-center hover:bg-surface-container-high dark:hover:bg-surface-variant text-label-md rounded transition-colors dark:text-on-surface">3</button>
+<span class="px-1 dark:text-on-surface-variant">...</span>
+<button class="w-8 h-8 flex items-center justify-center hover:bg-surface-container-high dark:hover:bg-surface-variant text-label-md rounded transition-colors dark:text-on-surface">31</button>
+</div>
+<button class="p-1 hover:bg-surface-container-high dark:hover:bg-surface-variant rounded transition-colors text-on-surface-variant dark:text-on-surface-variant">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Contextual Insights Section (Bento Grid) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+<div class="md:col-span-2 bg-surface-container-lowest dark:bg-surface-container p-6 rounded-xl border border-outline-variant dark:border-on-surface-variant shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<h4 class="font-headline-md text-headline-md text-on-surface dark:text-on-surface">처리 효율</h4>
+<span class="text-primary dark:text-primary-fixed-dim text-body-sm font-bold">지난주 대비 +12.4%</span>
+</div>
+<!-- Mock Chart Area -->
+<div class="h-48 w-full flex items-end gap-3 px-2">
+<div class="flex-1 bg-surface-container-high dark:bg-surface-variant rounded-t-sm h-[40%] transition-all hover:h-[45%] hover:bg-primary dark:hover:bg-primary-fixed-dim cursor-pointer relative group">
+<span class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface dark:bg-surface-bright text-inverse-on-surface dark:text-on-surface px-2 py-1 rounded text-[10px]">월: 84</span>
+</div>
+<div class="flex-1 bg-surface-container-high dark:bg-surface-variant rounded-t-sm h-[65%] transition-all hover:h-[70%] hover:bg-primary dark:hover:bg-primary-fixed-dim cursor-pointer relative group">
+<span class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface dark:bg-surface-bright text-inverse-on-surface dark:text-on-surface px-2 py-1 rounded text-[10px]">화: 132</span>
+</div>
+<div class="flex-1 bg-primary/20 dark:bg-primary-fixed-dim/20 rounded-t-sm h-[85%] transition-all hover:h-[90%] hover:bg-primary dark:hover:bg-primary-fixed-dim cursor-pointer relative group">
+<span class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface dark:bg-surface-bright text-inverse-on-surface dark:text-on-surface px-2 py-1 rounded text-[10px]">수: 194</span>
+</div>
+<div class="flex-1 bg-surface-container-high dark:bg-surface-variant rounded-t-sm h-[50%] transition-all hover:h-[55%] hover:bg-primary dark:hover:bg-primary-fixed-dim cursor-pointer relative group"></div>
+<div class="flex-1 bg-surface-container-high dark:bg-surface-variant rounded-t-sm h-[60%] transition-all hover:h-[65%] hover:bg-primary dark:hover:bg-primary-fixed-dim cursor-pointer relative group"></div>
+<div class="flex-1 bg-primary dark:bg-primary-fixed-dim rounded-t-sm h-[95%] relative group">
+<span class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface dark:bg-surface-bright text-inverse-on-surface dark:text-on-surface px-2 py-1 rounded text-[10px]">토: 210</span>
+</div>
+<div class="flex-1 bg-surface-container-high dark:bg-surface-variant rounded-t-sm h-[30%]"></div>
+</div>
+<div class="flex justify-between mt-2 text-[10px] text-on-surface-variant dark:text-on-surface-variant font-data-mono uppercase">
+<span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span><span>일</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest dark:bg-surface-container p-6 rounded-xl border border-outline-variant dark:border-on-surface-variant shadow-sm flex flex-col justify-between">
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface dark:text-on-surface mb-2">리소스 부하</h4>
+<p class="text-body-sm text-on-surface-variant dark:text-on-surface-variant mb-6">현재 교대 근무의 생산 라인 가동률입니다.</p>
+</div>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between text-label-md mb-1 dark:text-on-surface">
+<span>프린팅 라인 A</span>
+<span>92%</span>
+</div>
+<div class="w-full h-2 bg-surface-container dark:bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-error w-[92%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-label-md mb-1 dark:text-on-surface">
+<span>품질 검수</span>
+<span>65%</span>
+</div>
+<div class="w-full h-2 bg-surface-container dark:bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary dark:bg-primary-fixed-dim w-[65%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-label-md mb-1 dark:text-on-surface">
+<span>패키징 랩</span>
+<span>48%</span>
+</div>
+<div class="w-full h-2 bg-surface-container dark:bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary-container dark:bg-primary-fixed-dim/40 w-[48%]"></div>
+</div>
+</div>
+</div>
+<button class="mt-6 w-full py-2 border border-outline dark:border-on-surface-variant text-on-surface-variant dark:text-on-surface rounded-lg text-label-md hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors">
+                        인력 재배치
+                    </button>
+</div>
+</div>
+</main>
+</div>
+<!-- Micro-interaction Script -->
+<script>
+        // Simple search highlighting simulation
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('input', (e) => {
+            const value = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                row.style.display = text.includes(value) ? '' : 'none';
+            });
+        });
+
+        // Theme toggle logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+
+        themeToggle.addEventListener('click', () => {
+            const isDark = htmlElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            
+            // Sync with class-based config if needed
+            if (isDark) {
+                htmlElement.classList.remove('light');
+            } else {
+                htmlElement.classList.add('light');
+            }
+        });
+
+        // Check for saved theme
+        if (localStorage.getItem('theme') === 'dark' || 
+            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            htmlElement.classList.add('dark');
+            htmlElement.classList.remove('light');
+        } else {
+            htmlElement.classList.remove('dark');
+            htmlElement.classList.add('light');
+        }
+
+        // Keep existing debug toggle
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'd' && e.ctrlKey) {
+                htmlElement.classList.toggle('dark');
+            }
+        });
+    </script>
+</body></html>

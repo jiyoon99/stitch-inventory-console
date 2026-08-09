@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Inventory List | StockFlow Pro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#000000",
+                        "secondary": "#0058be",
+                        "outline-variant": "#c6c6cd",
+                        "surface-dim": "#d8dadc",
+                        "on-secondary-fixed-variant": "#004395",
+                        "secondary-fixed": "#d8e2ff",
+                        "inverse-surface": "#2d3133",
+                        "surface": "#f7f9fb",
+                        "surface-bright": "#f7f9fb",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "primary-fixed-dim": "#bec6e0",
+                        "tertiary": "#000000",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed": "#001a42",
+                        "on-tertiary-fixed-variant": "#38485d",
+                        "primary-fixed": "#dae2fd",
+                        "on-background": "#191c1e",
+                        "tertiary-fixed-dim": "#b7c8e1",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#bec6e0",
+                        "on-tertiary-fixed": "#0b1c30",
+                        "surface-container-high": "#e6e8ea",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "on-surface-variant": "#45464d",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#fefcff",
+                        "surface-tint": "#565e74",
+                        "on-primary-fixed": "#131b2e",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#d3e4fe",
+                        "on-tertiary-container": "#75859d",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "background": "#f7f9fb",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-container": "#eceef0",
+                        "on-surface": "#191c1e",
+                        "error": "#ba1a1a",
+                        "primary-container": "#131b2e",
+                        "surface-container-low": "#f2f4f6",
+                        "secondary-container": "#2170e4",
+                        "surface-variant": "#e0e3e5",
+                        "tertiary-container": "#0b1c30",
+                        "on-primary-container": "#7c839b",
+                        "outline": "#76777d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "container-margin": "24px",
+                        "xl": "32px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "display": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "mono-data": ["\"ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace\""],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "display": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f7f9fb; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .table-container { scrollbar-width: thin; scrollbar-color: #c6c6cd transparent; }
+        .row-hover:hover { background-color: #f8fafc; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- SideNavBar (Authority: JSON) -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-lg z-40 bg-surface-container-low dark:bg-inverse-surface border-r border-outline-variant dark:border-outline w-64">
+<div class="px-lg mb-xl">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 bg-secondary flex items-center justify-center rounded">
+<span class="material-symbols-outlined text-on-secondary" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md font-extrabold text-secondary">Inventory MS</h2>
+<p class="font-label-md text-label-md text-on-surface-variant">v2.4.0</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 flex flex-col">
+<!-- Dashboard Tab -->
+<a class="flex items-center gap-md px-lg py-md text-on-surface-variant dark:text-surface-variant font-label-md text-label-md hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- Inventory Tab (ACTIVE) -->
+<a class="flex items-center gap-md px-lg py-md text-secondary dark:text-secondary-fixed font-bold border-r-4 border-secondary font-label-md text-label-md bg-surface-container-high/50" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span>Inventory</span>
+</a>
+<!-- Movements Tab -->
+<a class="flex items-center gap-md px-lg py-md text-on-surface-variant dark:text-surface-variant font-label-md text-label-md hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="swap_horiz">swap_horiz</span>
+<span>Movements</span>
+</a>
+<!-- Settings Tab -->
+<a class="flex items-center gap-md px-lg py-md text-on-surface-variant dark:text-surface-variant font-label-md text-label-md hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="px-lg mt-auto pt-md flex flex-col gap-sm">
+<button class="w-full bg-secondary text-on-secondary py-md px-lg rounded flex items-center justify-center gap-sm font-label-md text-label-md hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                Add New Product
+            </button>
+<div class="mt-lg border-t border-outline-variant pt-md flex flex-col">
+<a class="flex items-center gap-md py-sm text-on-surface-variant hover:text-secondary transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-md py-sm text-on-surface-variant hover:text-error transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- TopAppBar (Authority: JSON) -->
+<header class="sticky top-0 z-50 flex justify-between items-center px-lg py-sm w-full bg-surface dark:bg-background border-b border-outline-variant dark:border-outline ml-64" style="width: calc(100% - 16rem);">
+<div class="flex items-center gap-xl w-1/2">
+<h1 class="font-headline-lg text-headline-lg font-bold text-primary dark:text-primary-fixed">StockFlow Pro</h1>
+<div class="relative flex-1 max-w-md group">
+<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-xl pr-md py-sm bg-surface-container rounded-full border-none focus:ring-2 focus:ring-secondary/20 font-body-md text-body-md outline-none" placeholder="Search inventory..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined p-sm rounded-full text-on-surface-variant hover:bg-surface-container-high transition-colors" data-icon="notifications">notifications</button>
+<button class="material-symbols-outlined p-sm rounded-full text-on-surface-variant hover:bg-surface-container-high transition-colors" data-icon="help">help</button>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant"></div>
+<div class="flex items-center gap-sm cursor-pointer group">
+<div class="text-right">
+<p class="font-label-md text-label-md text-on-surface">Alex Rivera</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider">Operations Lead</p>
+</div>
+<img class="w-10 h-10 rounded-full border-2 border-surface-container-highest group-hover:border-secondary transition-colors object-cover" data-alt="A professional headshot of a diverse male operations manager in a corporate office setting, high-end photography, soft directional lighting, neutral background, modern business aesthetic with cool tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJ03_ZgONx68jo84wKjA3WfOGtAGvQFLeAsVgxFFvvtF7ybkfSP5d6TrTL95kvYrJEtGL9JdptaPHg3ZFwRf2puLXG0x6ICZawJ44B5tpz3CEBYtCJnPEiIJXxxGgxY5OIe3vOutGcha-cJZ4FfKDbQv3w2vxn4i3sS1gNzlJtry7ZarBu27UwBaSfacnjKggb4tOhaTykoyYsvUChZLGRSCCx50XKBJnQooSZPiIK4J80YfTxrdzLrQ"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 p-lg min-h-screen">
+<!-- Header Section -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-lg">
+<div>
+<p class="font-label-md text-label-md text-secondary uppercase tracking-widest mb-xs">Warehouse A</p>
+<h2 class="font-display text-display text-primary">Inventory Management</h2>
+</div>
+<div class="flex items-center gap-sm">
+<div class="flex bg-surface-container p-xs rounded-lg border border-outline-variant">
+<button class="px-md py-xs bg-white shadow-sm rounded text-primary font-label-md text-label-md">All Items</button>
+<button class="px-md py-xs text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors">By Category</button>
+<button class="px-md py-xs text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors">Shortages</button>
+</div>
+<button class="flex items-center gap-sm px-lg py-md bg-primary text-white rounded font-label-md text-label-md hover:opacity-90 transition-all">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                    Export CSV
+                </button>
+</div>
+</section>
+<!-- Stats Overview Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-lg mb-xl">
+<div class="bg-white p-lg border border-outline-variant rounded-xl">
+<div class="flex justify-between items-start mb-md">
+<span class="material-symbols-outlined text-secondary bg-secondary-fixed p-sm rounded-lg" style="font-variation-settings: 'FILL' 1;">inventory</span>
+<span class="text-xs font-bold text-green-600 bg-green-50 px-sm py-xs rounded">+4.2%</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant">Total SKU Count</p>
+<h3 class="font-headline-lg text-headline-lg text-primary mt-xs">1,284</h3>
+</div>
+<div class="bg-white p-lg border border-outline-variant rounded-xl">
+<div class="flex justify-between items-start mb-md">
+<span class="material-symbols-outlined text-amber-600 bg-amber-50 p-sm rounded-lg" style="font-variation-settings: 'FILL' 1;">warning</span>
+<span class="text-xs font-bold text-amber-600 bg-amber-50 px-sm py-xs rounded">Critical</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant">Low Stock Alert</p>
+<h3 class="font-headline-lg text-headline-lg text-primary mt-xs">18</h3>
+</div>
+<div class="bg-white p-lg border border-outline-variant rounded-xl">
+<div class="flex justify-between items-start mb-md">
+<span class="material-symbols-outlined text-primary bg-primary-fixed p-sm rounded-lg" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span class="text-xs font-bold text-on-surface-variant bg-surface-container px-sm py-xs rounded">Monthly</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant">Inventory Value</p>
+<h3 class="font-headline-lg text-headline-lg text-primary mt-xs">$482,900</h3>
+</div>
+<div class="bg-white p-lg border border-outline-variant rounded-xl">
+<div class="flex justify-between items-start mb-md">
+<span class="material-symbols-outlined text-blue-600 bg-blue-50 p-sm rounded-lg" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+<span class="text-xs font-bold text-blue-600 bg-blue-50 px-sm py-xs rounded">Active</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant">Pending Orders</p>
+<h3 class="font-headline-lg text-headline-lg text-primary mt-xs">42</h3>
+</div>
+</section>
+<!-- Filters & Table Section -->
+<div class="bg-white border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+<div class="p-lg flex flex-wrap items-center justify-between gap-md bg-surface-container-low border-b border-outline-variant">
+<div class="flex items-center gap-md flex-1">
+<div class="flex items-center gap-sm">
+<span class="font-label-md text-label-md text-on-surface-variant">Category:</span>
+<select class="bg-white border border-outline-variant rounded px-md py-sm font-body-md text-body-md focus:ring-secondary focus:border-secondary transition-all outline-none">
+<option>All Categories</option>
+<option>Electronics</option>
+<option>Perishables</option>
+<option>Hardware</option>
+<option>Packaging</option>
+</select>
+</div>
+<div class="flex items-center gap-sm">
+<span class="font-label-md text-label-md text-on-surface-variant">Status:</span>
+<select class="bg-white border border-outline-variant rounded px-md py-sm font-body-md text-body-md focus:ring-secondary focus:border-secondary transition-all outline-none">
+<option>All Status</option>
+<option>In Stock</option>
+<option>Low Stock</option>
+<option>Out of Stock</option>
+</select>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-sm text-on-surface-variant hover:text-primary transition-colors border border-outline-variant rounded hover:bg-white">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+<button class="p-sm text-on-surface-variant hover:text-primary transition-colors border border-outline-variant rounded hover:bg-white">
+<span class="material-symbols-outlined">refresh</span>
+</button>
+</div>
+</div>
+<div class="table-container overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-lowest border-b border-outline-variant">
+<th class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Product Name</th>
+<th class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">SKU</th>
+<th class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Category</th>
+<th class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Stock Level</th>
+<th class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Unit Price</th>
+<th class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Last Updated</th>
+<th class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1: In Stock -->
+<tr class="row-hover transition-colors">
+<td class="px-lg py-lg">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">laptop_mac</span>
+</div>
+<div>
+<p class="font-body-md text-body-md font-bold text-primary">MacBook Pro 14"</p>
+<p class="text-[10px] text-on-surface-variant uppercase">M2 Pro, 16GB RAM</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-lg font-mono-data text-mono-data text-on-surface-variant">SF-MBP-14-M2</td>
+<td class="px-lg py-lg font-body-md text-body-md text-on-surface">Electronics</td>
+<td class="px-lg py-lg">
+<div class="flex items-center gap-md">
+<span class="px-sm py-xs bg-green-100 text-green-800 text-[10px] font-bold rounded uppercase tracking-wide">In Stock</span>
+<p class="font-mono-data text-mono-data">248 units</p>
+</div>
+</td>
+<td class="px-lg py-lg font-mono-data text-mono-data text-primary font-bold">$1,999.00</td>
+<td class="px-lg py-lg font-body-sm text-body-sm text-on-surface-variant">2 hours ago</td>
+<td class="px-lg py-lg text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-secondary transition-colors">more_vert</button>
+</td>
+</tr>
+<!-- Row 2: Low Stock -->
+<tr class="row-hover transition-colors">
+<td class="px-lg py-lg">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">mouse</span>
+</div>
+<div>
+<p class="font-body-md text-body-md font-bold text-primary">Logitech MX Master 3S</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Graphite Gray</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-lg font-mono-data text-mono-data text-on-surface-variant">SF-LOGI-MX3S</td>
+<td class="px-lg py-lg font-body-md text-body-md text-on-surface">Accessories</td>
+<td class="px-lg py-lg">
+<div class="flex items-center gap-md">
+<span class="px-sm py-xs bg-amber-100 text-amber-800 text-[10px] font-bold rounded uppercase tracking-wide">Low Stock</span>
+<p class="font-mono-data text-mono-data">12 units</p>
+</div>
+</td>
+<td class="px-lg py-lg font-mono-data text-mono-data text-primary font-bold">$99.00</td>
+<td class="px-lg py-lg font-body-sm text-body-sm text-on-surface-variant">5 hours ago</td>
+<td class="px-lg py-lg text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-secondary transition-colors">more_vert</button>
+</td>
+</tr>
+<!-- Row 3: Out of Stock -->
+<tr class="row-hover transition-colors">
+<td class="px-lg py-lg">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">keyboard</span>
+</div>
+<div>
+<p class="font-body-md text-body-md font-bold text-primary">Keychron K2 V2</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Mechanical RGB</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-lg font-mono-data text-mono-data text-on-surface-variant">SF-KEY-K2V2</td>
+<td class="px-lg py-lg font-body-md text-body-md text-on-surface">Accessories</td>
+<td class="px-lg py-lg">
+<div class="flex items-center gap-md">
+<span class="px-sm py-xs bg-red-100 text-red-800 text-[10px] font-bold rounded uppercase tracking-wide">Out of Stock</span>
+<p class="font-mono-data text-mono-data text-error">0 units</p>
+</div>
+</td>
+<td class="px-lg py-lg font-mono-data text-mono-data text-primary font-bold">$79.00</td>
+<td class="px-lg py-lg font-body-sm text-body-sm text-on-surface-variant">Yesterday</td>
+<td class="px-lg py-lg text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-secondary transition-colors">more_vert</button>
+</td>
+</tr>
+<!-- Row 4: In Stock -->
+<tr class="row-hover transition-colors">
+<td class="px-lg py-lg">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">monitor</span>
+</div>
+<div>
+<p class="font-body-md text-body-md font-bold text-primary">Dell UltraSharp 27"</p>
+<p class="text-[10px] text-on-surface-variant uppercase">4K UHD USB-C</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-lg font-mono-data text-mono-data text-on-surface-variant">SF-DELL-U2723</td>
+<td class="px-lg py-lg font-body-md text-body-md text-on-surface">Electronics</td>
+<td class="px-lg py-lg">
+<div class="flex items-center gap-md">
+<span class="px-sm py-xs bg-green-100 text-green-800 text-[10px] font-bold rounded uppercase tracking-wide">In Stock</span>
+<p class="font-mono-data text-mono-data">56 units</p>
+</div>
+</td>
+<td class="px-lg py-lg font-mono-data text-mono-data text-primary font-bold">$589.00</td>
+<td class="px-lg py-lg font-body-sm text-body-sm text-on-surface-variant">Just now</td>
+<td class="px-lg py-lg text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-secondary transition-colors">more_vert</button>
+</td>
+</tr>
+<!-- Row 5: In Stock -->
+<tr class="row-hover transition-colors">
+<td class="px-lg py-lg">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">headphones</span>
+</div>
+<div>
+<p class="font-body-md text-body-md font-bold text-primary">Sony WH-1000XM5</p>
+<p class="text-[10px] text-on-surface-variant uppercase">ANC Wireless</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-lg font-mono-data text-mono-data text-on-surface-variant">SF-SONY-XM5</td>
+<td class="px-lg py-lg font-body-md text-body-md text-on-surface">Electronics</td>
+<td class="px-lg py-lg">
+<div class="flex items-center gap-md">
+<span class="px-sm py-xs bg-green-100 text-green-800 text-[10px] font-bold rounded uppercase tracking-wide">In Stock</span>
+<p class="font-mono-data text-mono-data">132 units</p>
+</div>
+</td>
+<td class="px-lg py-lg font-mono-data text-mono-data text-primary font-bold">$348.00</td>
+<td class="px-lg py-lg font-body-sm text-body-sm text-on-surface-variant">1 day ago</td>
+<td class="px-lg py-lg text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-secondary transition-colors">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-lg py-md bg-surface-container-low border-t border-outline-variant flex items-center justify-between">
+<p class="font-body-sm text-body-sm text-on-surface-variant">Showing 1 to 5 of 1,284 results</p>
+<div class="flex items-center gap-sm">
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant text-on-surface-variant hover:bg-white transition-colors cursor-not-allowed opacity-50">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-secondary bg-secondary text-on-secondary font-label-md text-label-md">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant text-on-surface-variant hover:bg-white font-label-md text-label-md transition-colors">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant text-on-surface-variant hover:bg-white font-label-md text-label-md transition-colors">3</button>
+<span class="text-on-surface-variant">...</span>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant text-on-surface-variant hover:bg-white font-label-md text-label-md transition-colors">257</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant text-on-surface-variant hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- System Notifications Overlay (Micro-interaction anchor) -->
+<div class="fixed bottom-lg right-lg flex flex-col gap-sm z-50" id="toast-container"></div>
+</main>
+<script>
+        // Micro-interaction: Simulate some data update
+        function showNotification(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'bg-inverse-surface text-inverse-on-surface px-lg py-md rounded-lg shadow-xl flex items-center gap-md animate-bounce-short';
+            toast.innerHTML = `
+                <span class="material-symbols-outlined text-green-400">check_circle</span>
+                <span class="font-body-md text-body-md">${message}</span>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-4', 'transition-all', 'duration-500');
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+        // Trigger notification after load for "aliveness"
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                showNotification('Inventory database synced successfully');
+            }, 1000);
+        });
+
+        // Search bar focus effect
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('ring-2', 'ring-secondary/20');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('ring-2', 'ring-secondary/20');
+        });
+    </script>
+<style>
+        @keyframes bounce-short {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-5px);}
+            60% {transform: translateY(-3px);}
+        }
+        .animate-bounce-short {
+            animation: bounce-short 0.6s ease-out;
+        }
+    </style>
+</body></html>

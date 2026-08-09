@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Settings | StockFlow Pro</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#000000",
+                    "secondary": "#0058be",
+                    "outline-variant": "#c6c6cd",
+                    "surface-dim": "#d8dadc",
+                    "on-secondary-fixed-variant": "#004395",
+                    "secondary-fixed": "#d8e2ff",
+                    "inverse-surface": "#2d3133",
+                    "surface": "#f7f9fb",
+                    "surface-bright": "#f7f9fb",
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#93000a",
+                    "primary-fixed-dim": "#bec6e0",
+                    "tertiary": "#000000",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-fixed": "#001a42",
+                    "on-tertiary-fixed-variant": "#38485d",
+                    "primary-fixed": "#dae2fd",
+                    "on-background": "#191c1e",
+                    "tertiary-fixed-dim": "#b7c8e1",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-primary": "#bec6e0",
+                    "on-tertiary-fixed": "#0b1c30",
+                    "surface-container-high": "#e6e8ea",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "on-surface-variant": "#45464d",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-error": "#ffffff",
+                    "on-secondary-container": "#fefcff",
+                    "surface-tint": "#565e74",
+                    "on-primary-fixed": "#131b2e",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed": "#d3e4fe",
+                    "on-tertiary-container": "#75859d",
+                    "secondary-fixed-dim": "#adc6ff",
+                    "background": "#f7f9fb",
+                    "surface-container-highest": "#e0e3e5",
+                    "surface-container": "#eceef0",
+                    "on-surface": "#191c1e",
+                    "error": "#ba1a1a",
+                    "primary-container": "#131b2e",
+                    "surface-container-low": "#f2f4f6",
+                    "secondary-container": "#2170e4",
+                    "surface-variant": "#e0e3e5",
+                    "tertiary-container": "#0b1c30",
+                    "on-primary-container": "#7c839b",
+                    "outline": "#76777d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "gutter": "16px",
+                    "xs": "4px",
+                    "container-margin": "24px",
+                    "xl": "32px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "display": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "mono-data": ["\"ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace\""],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        /* Custom scrollbar for clean corporate look */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- TopNavBar -->
+<nav class="sticky top-0 z-50 flex justify-between items-center px-lg py-sm w-full bg-surface dark:bg-background border-b border-outline-variant dark:border-outline">
+<div class="flex items-center gap-md">
+<span class="font-headline-lg text-headline-lg font-bold text-primary dark:text-primary-fixed">StockFlow Pro</span>
+<div class="hidden md:flex ml-xl gap-lg">
+<span class="font-body-md text-body-md text-on-surface-variant dark:text-surface-variant cursor-pointer hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors px-sm py-xs rounded">Dashboard</span>
+<span class="font-body-md text-body-md text-on-surface-variant dark:text-surface-variant cursor-pointer hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors px-sm py-xs rounded">Inventory</span>
+<span class="font-body-md text-body-md text-secondary dark:text-secondary-fixed font-bold border-b-2 border-secondary px-sm py-xs">Settings</span>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative group">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer p-sm rounded-full hover:bg-surface-container-high">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer p-sm rounded-full hover:bg-surface-container-high">help</span>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a corporate operations manager, medium shot, clean studio lighting with a neutral gray background. The subject is wearing a modern navy blue blazer. High-resolution photography, sharp focus, representing a dependable and analytical professional brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyoihxSOpvu7TVslytfe3_pSVxoYTP9D001rDh4R8dtbkBlRGJMzxONmtKOwkTcm4RLXLqOT62tQt7S1l8fsTgZdHOp154PiOKPUbpo-w13lI7CiWcf_1UEGXMQdOHai3cLKb2rjHBp33bD3omZAQGy4Z5o_iDp6QG8N4YZie-Z8TLU3EBZD6DNKkrBlFqCAJpbCs_GfaJLkVcvG6QhCBc9xEaezbR0R0fksZaRVlwt-uPC1p2o8hU7w"/>
+</div>
+</div>
+</nav>
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="hidden md:flex fixed left-0 top-0 h-full w-64 flex-col py-lg z-40 bg-surface-container-low dark:bg-inverse-surface border-r border-outline-variant dark:border-outline pt-24">
+<div class="px-lg mb-xl">
+<div class="flex items-center gap-sm mb-xs">
+<span class="material-symbols-outlined text-secondary text-headline-md" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="font-headline-md text-headline-md font-extrabold text-secondary">Inventory MS</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant">v2.4.0</span>
+</div>
+<nav class="flex-1 space-y-xs px-md">
+<div class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all cursor-pointer">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</div>
+<div class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all cursor-pointer">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Inventory</span>
+</div>
+<div class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all cursor-pointer">
+<span class="material-symbols-outlined">swap_horiz</span>
+<span class="font-label-md text-label-md">Movements</span>
+</div>
+<div class="flex items-center gap-md px-md py-sm rounded-lg text-secondary dark:text-secondary-fixed font-bold border-r-4 border-secondary bg-surface-container-high transition-all cursor-pointer">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</div>
+</nav>
+<div class="px-md mt-auto space-y-xs">
+<button class="w-full bg-secondary text-on-secondary py-sm rounded-lg font-label-md flex items-center justify-center gap-sm hover:opacity-90 transition-opacity mb-lg">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                    Add New Product
+                </button>
+<div class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all cursor-pointer">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="font-label-md text-label-md">Support</span>
+</div>
+<div class="flex items-center gap-md px-md py-sm rounded-lg text-error hover:bg-error-container transition-all cursor-pointer">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</div>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 md:ml-64 p-container-margin bg-surface">
+<header class="mb-xl">
+<h1 class="font-display text-display text-primary mb-xs">Settings</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Manage your account preferences and system-wide inventory configurations.</p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-lg max-w-6xl">
+<!-- Left Column: Navigation/Profile Summary -->
+<div class="lg:col-span-1 space-y-lg">
+<!-- Profile Card -->
+<section class="bg-white border border-outline-variant p-md rounded-xl shadow-sm">
+<div class="flex flex-col items-center text-center">
+<div class="relative mb-md">
+<div class="w-24 h-24 rounded-full overflow-hidden border-4 border-surface-container">
+<img class="w-full h-full object-cover" data-alt="A close-up high-detail portrait of a professional woman in a bright, modern office setting. She is smiling confidently, wearing a white blouse. The background features blurred glass partitions and architectural lines in soft blues and grays. Clean, high-performance corporate photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0EUaxox8dORX30f--fvA_u2wpsOSFVrQkp6PzSpmjSioMdF9-DPWkXYF9ZPNRwGXRnTiJIV32nwzy7ZvoJnu5DLSOBwdMScU_VsAljrMURfhenx7qgrG09st-i0t5AswexjcCMGi0CyBM57g1UjRIoPO1IhCUjKF4fVxVzJGP64uI5ooiuGalw29jxqEtS_yE90xFfpdwHqb9OVzMA9Om3xvirAK-Ldxwxc3Wpufa4nV0LoK6UidjCg"/>
+</div>
+<button class="absolute bottom-0 right-0 bg-secondary text-white p-xs rounded-full border-2 border-white shadow-md">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+</button>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary">Sarah Jenkins</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-md">sarah.jenkins@stockflow.pro</p>
+<span class="px-md py-xs bg-secondary-fixed text-on-secondary-fixed font-label-md rounded-full">Senior Operations Manager</span>
+</div>
+</section>
+<!-- Settings Sections Link List -->
+<div class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<button class="w-full flex items-center gap-md px-lg py-md hover:bg-surface-container text-secondary border-l-4 border-secondary transition-colors">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">User Profile</span>
+</button>
+<button class="w-full flex items-center gap-md px-lg py-md hover:bg-surface-container text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">notifications_active</span>
+<span class="font-label-md text-label-md">Notifications</span>
+</button>
+<button class="w-full flex items-center gap-md px-lg py-md hover:bg-surface-container text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">tune</span>
+<span class="font-label-md text-label-md">General Preferences</span>
+</button>
+<button class="w-full flex items-center gap-md px-lg py-md hover:bg-surface-container text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">security</span>
+<span class="font-label-md text-label-md">Security &amp; Access</span>
+</button>
+</div>
+</div>
+<!-- Right Column: Forms -->
+<div class="lg:col-span-2 space-y-lg">
+<!-- User Profile Form -->
+<section class="bg-white border border-outline-variant rounded-xl shadow-sm overflow-hidden" id="user-profile">
+<div class="px-lg py-md bg-surface-container-low border-b border-outline-variant flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-primary">User Profile</h2>
+<span class="material-symbols-outlined text-on-surface-variant">person</span>
+</div>
+<div class="p-lg space-y-md">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">First Name</label>
+<input class="w-full p-sm border border-outline rounded-lg focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none transition-all font-body-md" type="text" value="Sarah"/>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">Last Name</label>
+<input class="w-full p-sm border border-outline rounded-lg focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none transition-all font-body-md" type="text" value="Jenkins"/>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">Email Address</label>
+<input class="w-full p-sm border border-outline rounded-lg focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none transition-all font-body-md" type="email" value="sarah.jenkins@stockflow.pro"/>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">Role</label>
+<select class="w-full p-sm border border-outline rounded-lg focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none transition-all font-body-md bg-white">
+<option>Administrator</option>
+<option selected="">Senior Operations Manager</option>
+<option>Data Analyst</option>
+<option>Inventory Clerk</option>
+</select>
+</div>
+</div>
+</section>
+<!-- Notifications Form -->
+<section class="bg-white border border-outline-variant rounded-xl shadow-sm overflow-hidden" id="system-notifications">
+<div class="px-lg py-md bg-surface-container-low border-b border-outline-variant flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-primary">System Notifications</h2>
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</div>
+<div class="p-lg space-y-lg">
+<div class="flex items-center justify-between p-md bg-surface-container rounded-lg">
+<div>
+<h4 class="font-label-md text-label-md text-primary">Low Stock Alerts</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Receive email alerts when inventory falls below threshold.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between p-md border border-outline-variant rounded-lg">
+<div>
+<h4 class="font-label-md text-label-md text-primary">Movement Summaries</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Daily automated reports of stock movements.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+</div>
+</div>
+</section>
+<!-- General Preferences Form -->
+<section class="bg-white border border-outline-variant rounded-xl shadow-sm overflow-hidden" id="general-preferences">
+<div class="px-lg py-md bg-surface-container-low border-b border-outline-variant flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-primary">General Preferences</h2>
+<span class="material-symbols-outlined text-on-surface-variant">settings</span>
+</div>
+<div class="p-lg space-y-md">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">Default Currency</label>
+<select class="w-full p-sm border border-outline rounded-lg focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none transition-all font-body-md bg-white">
+<option selected="">USD ($)</option>
+<option>EUR (€)</option>
+<option>GBP (£)</option>
+<option>JPY (¥)</option>
+</select>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">Timezone</label>
+<select class="w-full p-sm border border-outline rounded-lg focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none transition-all font-body-md bg-white">
+<option selected="">(GMT-05:00) Eastern Time</option>
+<option>(GMT-08:00) Pacific Time</option>
+<option>(GMT+00:00) London</option>
+<option>(GMT+01:00) Berlin</option>
+</select>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">Date Format</label>
+<div class="flex gap-md">
+<label class="flex items-center gap-sm cursor-pointer">
+<input checked="" class="text-secondary focus:ring-secondary" name="date-format" type="radio"/>
+<span class="font-body-md text-body-md">MM/DD/YYYY</span>
+</label>
+<label class="flex items-center gap-sm cursor-pointer">
+<input class="text-secondary focus:ring-secondary" name="date-format" type="radio"/>
+<span class="font-body-md text-body-md">DD/MM/YYYY</span>
+</label>
+</div>
+</div>
+</div>
+</section>
+<!-- Form Actions -->
+<div class="flex justify-end gap-md pt-md">
+<button class="px-xl py-md border border-outline text-primary font-label-md rounded-lg hover:bg-surface-container-high transition-colors">
+                            Discard Changes
+                        </button>
+<button class="px-xl py-md bg-secondary text-on-secondary font-label-md rounded-lg shadow-md hover:opacity-90 transition-opacity active:scale-95">
+                            Save Configuration
+                        </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Mobile Navigation Shell (as per requirements) -->
+<div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-outline-variant flex justify-around py-sm px-md z-50">
+<div class="flex flex-col items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-[10px]">Dashboard</span>
+</div>
+<div class="flex flex-col items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-[10px]">Inventory</span>
+</div>
+<div class="flex flex-col items-center gap-xs text-secondary font-bold">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-label-md text-[10px]">Settings</span>
+</div>
+<div class="flex flex-col items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-[10px]">Profile</span>
+</div>
+</div>
+<script>
+        // Micro-interaction: Visual feedback on save
+        const saveBtn = document.querySelector('button.bg-secondary');
+        saveBtn.addEventListener('click', () => {
+            const originalText = saveBtn.innerText;
+            saveBtn.innerText = 'Saving...';
+            saveBtn.disabled = true;
+            
+            setTimeout(() => {
+                saveBtn.innerText = 'Changes Saved!';
+                saveBtn.classList.remove('bg-secondary');
+                saveBtn.classList.add('bg-green-600');
+                
+                setTimeout(() => {
+                    saveBtn.innerText = originalText;
+                    saveBtn.classList.remove('bg-green-600');
+                    saveBtn.classList.add('bg-secondary');
+                    saveBtn.disabled = false;
+                }, 2000);
+            }, 800);
+        });
+
+        // Sticky sub-navigation highlighting (simple version)
+        window.addEventListener('scroll', () => {
+            // Logic to highlight sections as user scrolls would go here
+        });
+    </script>
+</body></html>

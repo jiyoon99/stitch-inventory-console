@@ -1,0 +1,12 @@
+node_modules/
+.DS_Store
+*.log
+*.pid
+__pycache__/
+*.pyc
+.env
+inventory_site/data.json
+inventory_site/users.json
+inventory_site/data.backup*.json
+inventory_site/server.log
+inventory_site/server-error.log

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Stock Movements | StockFlow Pro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary": "#000000",
+                      "secondary": "#0058be",
+                      "outline-variant": "#c6c6cd",
+                      "surface-dim": "#d8dadc",
+                      "on-secondary-fixed-variant": "#004395",
+                      "secondary-fixed": "#d8e2ff",
+                      "inverse-surface": "#2d3133",
+                      "surface": "#f7f9fb",
+                      "surface-bright": "#f7f9fb",
+                      "error-container": "#ffdad6",
+                      "on-error-container": "#93000a",
+                      "primary-fixed-dim": "#bec6e0",
+                      "tertiary": "#000000",
+                      "on-secondary": "#ffffff",
+                      "on-secondary-fixed": "#001a42",
+                      "on-tertiary-fixed-variant": "#38485d",
+                      "primary-fixed": "#dae2fd",
+                      "on-background": "#191c1e",
+                      "tertiary-fixed-dim": "#b7c8e1",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "inverse-primary": "#bec6e0",
+                      "on-tertiary-fixed": "#0b1c30",
+                      "surface-container-high": "#e6e8ea",
+                      "on-primary-fixed-variant": "#3f465c",
+                      "on-surface-variant": "#45464d",
+                      "inverse-on-surface": "#eff1f3",
+                      "on-error": "#ffffff",
+                      "on-secondary-container": "#fefcff",
+                      "surface-tint": "#565e74",
+                      "on-primary-fixed": "#131b2e",
+                      "on-primary": "#ffffff",
+                      "tertiary-fixed": "#d3e4fe",
+                      "on-tertiary-container": "#75859d",
+                      "secondary-fixed-dim": "#adc6ff",
+                      "background": "#f7f9fb",
+                      "surface-container-highest": "#e0e3e5",
+                      "surface-container": "#eceef0",
+                      "on-surface": "#191c1e",
+                      "error": "#ba1a1a",
+                      "primary-container": "#131b2e",
+                      "surface-container-low": "#f2f4f6",
+                      "secondary-container": "#2170e4",
+                      "surface-variant": "#e0e3e5",
+                      "tertiary-container": "#0b1c30",
+                      "on-primary-container": "#7c839b",
+                      "outline": "#76777d"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "base": "4px",
+                      "gutter": "16px",
+                      "xs": "4px",
+                      "container-margin": "24px",
+                      "xl": "32px",
+                      "sm": "8px",
+                      "md": "16px",
+                      "lg": "24px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Inter"],
+                      "label-md": ["Inter"],
+                      "display": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "body-md": ["Inter"],
+                      "mono-data": ["ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"],
+                      "body-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "display": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- Sidebar Navigation -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-lg z-40 bg-surface-container-low border-r border-outline-variant w-64">
+<div class="px-lg mb-xl">
+<h1 class="font-headline-md text-headline-md font-extrabold text-secondary">Inventory MS</h1>
+<p class="text-on-surface-variant font-label-md text-label-md opacity-70">v2.4.0</p>
+</div>
+<nav class="flex-1 px-sm space-y-1">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high transition-all duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined text-inherit" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-inherit" data-icon="inventory_2">inventory_2</span>
+<span>Inventory</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-secondary font-bold border-r-4 border-secondary font-label-md text-label-md hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-inherit" data-icon="swap_horiz">swap_horiz</span>
+<span>Movements</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-inherit" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="px-md mt-auto space-y-md">
+<button class="w-full bg-secondary text-on-secondary py-sm rounded-lg font-label-md text-label-md shadow-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+                Add New Product
+            </button>
+<div class="pt-md border-t border-outline-variant">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Top AppBar -->
+<header class="sticky top-0 z-50 flex justify-between items-center px-lg py-sm ml-64 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-lg">
+<span class="font-headline-lg text-headline-lg font-bold text-primary">StockFlow Pro</span>
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]" data-icon="search">search</span>
+<input class="w-full pl-xl pr-md py-xs bg-surface-container-lowest border border-outline rounded-full text-body-md focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all" placeholder="Search movements..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="flex gap-sm">
+<button class="p-sm text-secondary hover:bg-surface-container-high rounded-full transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-sm text-secondary hover:bg-surface-container-high rounded-full transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+</div>
+<div class="h-8 w-8 rounded-full bg-secondary-fixed flex items-center justify-center overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="Close up professional headshot of a corporate logistics manager wearing a crisp white shirt, clean studio lighting with a neutral gray background, modern corporate style, high resolution and sharp focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8iYgburZYkJfdueAPybhjIvo3dq8TKMKRXnNFbTN8gwYt9_OFeDGjEIhz9p0vITjAaZ19X-RsJES1qioaOLovQafrES___dpUZgiZFvjeakJLQNLUt-BE8OstsV-anisnBRjZXeAI9oFZ0DqK_jIsi_ViJdR0oPJhmZInYsE9oP_g5j__e8l1GslgEdKB-pMlTUA3jAE9mAQxqL2civyQmLmJ5DmQCHVZKYVW__BxIwqy_BW1S8HYlQ"/>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-64 p-lg min-h-[calc(100vh-64px)]">
+<!-- Dashboard Header & Metrics -->
+<div class="flex justify-between items-end mb-lg">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-xs">Stock Movements</h2>
+<p class="text-on-surface-variant font-body-md">Real-time audit trail of all inventory activities across the network.</p>
+</div>
+<div class="flex gap-sm">
+<button class="px-md py-sm border border-outline-variant bg-surface-container-lowest text-on-surface font-label-md text-label-md rounded-lg flex items-center gap-xs hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="file_download">file_download</span>
+                    Export CSV
+                </button>
+<button class="px-md py-sm bg-primary text-on-primary font-label-md text-label-md rounded-lg flex items-center gap-xs hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[18px]" data-icon="print">print</span>
+                    Print Report
+                </button>
+</div>
+</div>
+<!-- Metrics Row -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter mb-lg">
+<div class="bg-surface-container-lowest p-md border border-outline-variant rounded-xl flex flex-col justify-between">
+<div class="flex justify-between items-start mb-sm">
+<span class="text-on-surface-variant font-label-md text-label-md">Total Movements (24h)</span>
+<span class="material-symbols-outlined text-secondary" data-icon="trending_up">trending_up</span>
+</div>
+<div class="flex items-baseline gap-xs">
+<span class="font-display text-display text-primary">1,284</span>
+<span class="text-body-sm text-green-600 font-bold">+12%</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-md border border-outline-variant rounded-xl flex flex-col justify-between">
+<div class="flex justify-between items-start mb-sm">
+<span class="text-on-surface-variant font-label-md text-label-md">Stock In (Today)</span>
+<span class="material-symbols-outlined text-green-600" data-icon="input">input</span>
+</div>
+<div class="flex items-baseline gap-xs">
+<span class="font-display text-display text-primary">422</span>
+<span class="text-body-sm text-on-surface-variant">Units</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-md border border-outline-variant rounded-xl flex flex-col justify-between">
+<div class="flex justify-between items-start mb-sm">
+<span class="text-on-surface-variant font-label-md text-label-md">Stock Out (Today)</span>
+<span class="material-symbols-outlined text-error" data-icon="output">output</span>
+</div>
+<div class="flex items-baseline gap-xs">
+<span class="font-display text-display text-primary">812</span>
+<span class="text-body-sm text-on-surface-variant">Units</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-md border border-outline-variant rounded-xl flex flex-col justify-between">
+<div class="flex justify-between items-start mb-sm">
+<span class="text-on-surface-variant font-label-md text-label-md">Avg. Returns</span>
+<span class="material-symbols-outlined text-amber-500" data-icon="assignment_return">assignment_return</span>
+</div>
+<div class="flex items-baseline gap-xs">
+<span class="font-display text-display text-primary">2.4%</span>
+<span class="text-body-sm text-red-600 font-bold">+0.8%</span>
+</div>
+</div>
+</div>
+<!-- Filters Section -->
+<div class="bg-surface-container p-md rounded-xl mb-lg border border-outline-variant flex flex-wrap items-center gap-lg">
+<div class="flex-1 flex gap-md">
+<div class="flex flex-col gap-xs min-w-[200px]">
+<label class="text-label-md font-label-md text-on-surface-variant px-xs">Date Range</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]" data-icon="calendar_today">calendar_today</span>
+<select class="w-full pl-xl pr-md py-sm bg-surface-container-lowest border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-secondary/20 focus:border-secondary appearance-none">
+<option>Last 24 Hours</option>
+<option selected="">Last 7 Days</option>
+<option>Last 30 Days</option>
+<option>Custom Range</option>
+</select>
+</div>
+</div>
+<div class="flex flex-col gap-xs min-w-[180px]">
+<label class="text-label-md font-label-md text-on-surface-variant px-xs">Action Type</label>
+<select class="w-full px-md py-sm bg-surface-container-lowest border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-secondary/20 focus:border-secondary appearance-none">
+<option>All Actions</option>
+<option>Stock In</option>
+<option>Stock Out</option>
+<option>Return</option>
+<option>Inventory Adjust</option>
+</select>
+</div>
+<div class="flex flex-col gap-xs min-w-[180px]">
+<label class="text-label-md font-label-md text-on-surface-variant px-xs">User Role</label>
+<select class="w-full px-md py-sm bg-surface-container-lowest border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-secondary/20 focus:border-secondary appearance-none">
+<option>All Users</option>
+<option>Warehouse Op</option>
+<option>Inventory Mgr</option>
+<option>System Auto</option>
+</select>
+</div>
+</div>
+<div class="flex items-end self-end gap-sm">
+<button class="px-md py-sm text-secondary font-label-md text-label-md hover:bg-secondary-fixed rounded-lg transition-colors">Clear All Filters</button>
+<button class="px-xl py-sm bg-secondary text-on-secondary font-label-md text-label-md rounded-lg hover:opacity-90 transition-opacity">Apply Filters</button>
+</div>
+</div>
+<!-- Movements Table Content -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm">
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Date / Time</th>
+<th class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Action Type</th>
+<th class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">SKU</th>
+<th class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Product Name</th>
+<th class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right">Qty Change</th>
+<th class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">User</th>
+<th class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-center">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface transition-colors">
+<td class="px-lg py-md font-mono-data text-mono-data">2023-11-24 14:22:10</td>
+<td class="px-lg py-md">
+<span class="px-sm py-xs bg-green-100 text-green-800 rounded-full text-xs font-bold flex items-center gap-xs w-fit">
+<span class="material-symbols-outlined text-[14px]" data-icon="arrow_downward">arrow_downward</span>
+                                    STOCK IN
+                                </span>
+</td>
+<td class="px-lg py-md font-mono-data text-mono-data">EL-TV-8821</td>
+<td class="px-lg py-md text-on-surface font-semibold">OLED Smart Display 55"</td>
+<td class="px-lg py-md text-right text-green-600 font-bold">+12</td>
+<td class="px-lg py-md flex items-center gap-sm">
+<div class="w-6 h-6 rounded-full bg-surface-dim overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Small circular profile avatar of a warehouse associate, professional demeanor, warehouse environment background blurred, warm lighting, consistent corporate photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqAQ0fRH-SNnFLV4K6zwoF7IH8nIYwC1I5nH7QiagiNKV_wAtkNvRd4t-NjzcR-ozPrkCrOw6CrngfW3c8rR2nU5V41yCaXFs37bMZ6U7OvieVsQVtKhLaULtq_PNkJFQLDMzM27Jdf1PEKZhI3Pn9cdl_kcw7xhzqbPtE_DD6lAG0niRDntXbPIEaZEp9a0tZr1XtTCWnXhGdZ4h68XmHTrzwdCvdpYdSwTtFSNu_XAUb__FJhAS7_g"/>
+</div>
+<span class="text-body-md">James Miller</span>
+</td>
+<td class="px-lg py-md text-center">
+<button class="text-on-surface-variant hover:text-secondary"><span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface transition-colors">
+<td class="px-lg py-md font-mono-data text-mono-data">2023-11-24 13:45:02</td>
+<td class="px-lg py-md">
+<span class="px-sm py-xs bg-red-100 text-red-800 rounded-full text-xs font-bold flex items-center gap-xs w-fit">
+<span class="material-symbols-outlined text-[14px]" data-icon="arrow_upward">arrow_upward</span>
+                                    STOCK OUT
+                                </span>
+</td>
+<td class="px-lg py-md font-mono-data text-mono-data">CP-MB-0012</td>
+<td class="px-lg py-md text-on-surface font-semibold">Workstation Pro Z4</td>
+<td class="px-lg py-md text-right text-red-600 font-bold">-05</td>
+<td class="px-lg py-md flex items-center gap-sm">
+<div class="w-6 h-6 rounded-full bg-surface-dim overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Small circular profile avatar of a shipping clerk, neutral expression, indoor professional lighting, blue background, modern digital professional style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtbRLzOPyCeX7yDRdfPC1aUgZR18uQLhfDBkVm-n-3IicPh7pNJzehSJCGKQzvOdfFVK5n-96SzenQz6eqsK8cv1eynvmnsPMpMq2m2h4rSU3oqx30hLU-V7DcXlQu50wQTcAujROtRwxbPa1JOtqL-ZD4ATEDTIeKk5dwgqJCbc2v7QOLtUazY9eyTMooSW6dJJBXp6nHhnj7_xPP_M_qcBNhLUEznr9lTh-jRU2ozxzBEIK7_FWXMA"/>
+</div>
+<span class="text-body-md">Sarah Chen</span>
+</td>
+<td class="px-lg py-md text-center">
+<button class="text-on-surface-variant hover:text-secondary"><span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface transition-colors">
+<td class="px-lg py-md font-mono-data text-mono-data">2023-11-24 12:10:55</td>
+<td class="px-lg py-md">
+<span class="px-sm py-xs bg-amber-100 text-amber-800 rounded-full text-xs font-bold flex items-center gap-xs w-fit">
+<span class="material-symbols-outlined text-[14px]" data-icon="keyboard_return">keyboard_return</span>
+                                    RETURN
+                                </span>
+</td>
+<td class="px-lg py-md font-mono-data text-mono-data">LS-HP-9930</td>
+<td class="px-lg py-md text-on-surface font-semibold">Noise Cancelling Pods</td>
+<td class="px-lg py-md text-right text-amber-600 font-bold">+02</td>
+<td class="px-lg py-md flex items-center gap-sm">
+<div class="w-6 h-6 rounded-full bg-surface-dim flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]" data-icon="robot_2">robot_2</span>
+</div>
+<span class="text-body-md italic text-on-surface-variant">System Automated</span>
+</td>
+<td class="px-lg py-md text-center">
+<button class="text-on-surface-variant hover:text-secondary"><span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface transition-colors">
+<td class="px-lg py-md font-mono-data text-mono-data">2023-11-24 11:32:18</td>
+<td class="px-lg py-md">
+<span class="px-sm py-xs bg-blue-100 text-blue-800 rounded-full text-xs font-bold flex items-center gap-xs w-fit">
+<span class="material-symbols-outlined text-[14px]" data-icon="edit">edit</span>
+                                    ADJUST
+                                </span>
+</td>
+<td class="px-lg py-md font-mono-data text-mono-data">HD-SD-1044</td>
+<td class="px-lg py-md text-on-surface font-semibold">External HDD 2TB</td>
+<td class="px-lg py-md text-right text-on-surface font-bold">-01</td>
+<td class="px-lg py-md flex items-center gap-sm">
+<div class="w-6 h-6 rounded-full bg-surface-dim overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Small circular profile avatar of a senior inventory manager, gray hair, glasses, office environment background, natural daylight, professional corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAY5OBQ8Mo0VSH_bUcmHMnSvTtCDq7oeVDcyxFmSg-ylQ-BKLNu_wWNSmFUy-ENgXWQ6iJbFmIE-0wmhtg47yoGqQVkdFDnu9xILq0lAupe-Hwsu6NtleBB9_JoAGQseGKcBhDZBjb6lwNozEZnyHClvNi0COEe1lSM6u8BqD56L5_4icfi5kyJtpj34fH8y6JWOzgcN_qf24oPZCsSrAqm0xnubQ72X71aiyChQTzR9BWyexm3vNzO7Q"/>
+</div>
+<span class="text-body-md">Robert Wilson</span>
+</td>
+<td class="px-lg py-md text-center">
+<button class="text-on-surface-variant hover:text-secondary"><span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface transition-colors">
+<td class="px-lg py-md font-mono-data text-mono-data">2023-11-24 09:15:44</td>
+<td class="px-lg py-md">
+<span class="px-sm py-xs bg-red-100 text-red-800 rounded-full text-xs font-bold flex items-center gap-xs w-fit">
+<span class="material-symbols-outlined text-[14px]" data-icon="arrow_upward">arrow_upward</span>
+                                    STOCK OUT
+                                </span>
+</td>
+<td class="px-lg py-md font-mono-data text-mono-data">EL-KB-4410</td>
+<td class="px-lg py-md text-on-surface font-semibold">Mechanical Keyboard RGB</td>
+<td class="px-lg py-md text-right text-red-600 font-bold">-45</td>
+<td class="px-lg py-md flex items-center gap-sm">
+<div class="w-6 h-6 rounded-full bg-surface-dim overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Small circular profile avatar of a female logistics coordinator, friendly expression, brightly lit office space, modern professional appearance, high quality commercial portrait." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCt-0I9Kpbs72Qh43140XUS-AJNhPkJe3BQqru47ErZuqhGJpH5Q8UrSiu-5o8u_kYcS1R1SdjFyQtw9uPHfz459ci_j3-oTdHX5J7YtgwyXNFNmAWxHe5vXFMcwRk8Cn7OR5krKJa-2kPUMLklHomIUCyWCPsl4GhUo5D-QI8L6Mw_nLTr_mO5ABmxqAVpy2IBoKd5dfQcDADd2yCtGVlFS2YhWJmTuaQFj-jttaVGLGkpa0i7PIlB8g"/>
+</div>
+<span class="text-body-md">Elena Rodriguez</span>
+</td>
+<td class="px-lg py-md text-center">
+<button class="text-on-surface-variant hover:text-secondary"><span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-lg py-md bg-surface-container-low border-t border-outline-variant flex justify-between items-center">
+<span class="text-body-sm text-on-surface-variant">Showing <span class="font-bold">1-10</span> of <span class="font-bold">4,128</span> entries</span>
+<div class="flex gap-xs">
+<button class="px-sm py-sm border border-outline-variant rounded-lg hover:bg-surface-container transition-colors disabled:opacity-50">
+<span class="material-symbols-outlined text-[20px]" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="px-md py-sm bg-secondary text-on-secondary rounded-lg font-bold">1</button>
+<button class="px-md py-sm border border-outline-variant rounded-lg hover:bg-surface-container transition-colors">2</button>
+<button class="px-md py-sm border border-outline-variant rounded-lg hover:bg-surface-container transition-colors">3</button>
+<span class="px-md py-sm text-on-surface-variant">...</span>
+<button class="px-md py-sm border border-outline-variant rounded-lg hover:bg-surface-container transition-colors">413</button>
+<button class="px-sm py-sm border border-outline-variant rounded-lg hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- System Message / Logs Detail Area -->
+<div class="mt-lg grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<div class="lg:col-span-2 bg-surface-container p-lg rounded-xl border border-outline-variant">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-headline-md text-headline-md text-primary">Recent Anomalies</h3>
+<span class="px-sm py-xs bg-red-100 text-red-800 rounded-full text-[10px] font-bold tracking-widest">CRITICAL WATCH</span>
+</div>
+<div class="space-y-sm">
+<div class="p-sm bg-surface-container-lowest border-l-4 border-error rounded shadow-sm flex gap-md">
+<span class="material-symbols-outlined text-error" data-icon="warning">warning</span>
+<div>
+<p class="font-semibold text-body-md">Unusual Batch Movement - SKU: CP-MB-0012</p>
+<p class="text-body-sm text-on-surface-variant">50 units removed by System Auto without matching sales order. Manual review required.</p>
+</div>
+</div>
+<div class="p-sm bg-surface-container-lowest border-l-4 border-amber-500 rounded shadow-sm flex gap-md">
+<span class="material-symbols-outlined text-amber-500" data-icon="info">info</span>
+<div>
+<p class="font-semibold text-body-md">Return Rate Alert - Noise Cancelling Pods</p>
+<p class="text-body-sm text-on-surface-variant">Returns for this SKU have exceeded 5% this week. Quality control notified.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-primary text-on-primary p-lg rounded-xl flex flex-col justify-between relative overflow-hidden">
+<!-- Visual Background Element -->
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-secondary opacity-20 rounded-full blur-3xl"></div>
+<div class="relative z-10">
+<h3 class="font-headline-md text-headline-md mb-sm">Storage Optimization</h3>
+<p class="text-body-md opacity-80 mb-md">Movements indicate Zone B is reaching 85% capacity. Suggest routing new Stock In to Zone D.</p>
+<button class="w-full py-sm bg-on-primary text-primary rounded-lg font-bold hover:bg-secondary-fixed transition-colors">Optimize Layout</button>
+</div>
+<div class="mt-lg pt-md border-t border-on-primary/20 flex items-center justify-between opacity-80">
+<span class="text-label-md">Next Forecast Update</span>
+<span class="text-label-md font-mono-data">18:00 UTC</span>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Simple micro-interaction for active row
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('click', () => {
+                document.querySelectorAll('tbody tr').forEach(r => r.classList.remove('bg-secondary-fixed/30'));
+                row.classList.add('bg-secondary-fixed/30');
+            });
+        });
+    </script>
+</body></html>
